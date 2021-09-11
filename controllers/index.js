@@ -1,3 +1,4 @@
 module.exports = {
-    currency: require('./lookup').currency
+    currency: require('./lookup').currency,
+    user: require('./user')
 }

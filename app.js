@@ -3,6 +3,7 @@ const express = require('express');
 const { fork } = require('child_process')
 const app = express();
 const controllers = require('@/controllers')
+const userRouter = require('@/routes').user
 const DB = require('@/db');
 
 dotenv.config({ path: './config.env' });
@@ -20,5 +21,10 @@ if (process.argv[2] === "--importCurrency") {
 
 app.use(express.json());
 app.use(express.static(`${__dirname}/public`));
+
+
+//Routes
+app.use('/api/users', userRouter)
+
 
 module.exports = app
