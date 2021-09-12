@@ -1,18 +1,21 @@
 const mongoose = require("mongoose");
 
-var userSchema = new mongoose.Schema({
+const userSchema = new mongoose.Schema({
     name: {
         type: String,
         trim: true
     },
     email_address: {
         type: String,
-        required: true,
-        trim: true
+        unique: true,
+        required: [true, 'Email Address is required'],
+        trim: true,
+        immutable: true
     },
     password: {
         type: String,
         required: true,
+        minLength: [8, 'Minimum length of 8 for password'],
     },
     //see can do validations of check input is date or not in middleware
     birthday: {
@@ -21,6 +24,11 @@ var userSchema = new mongoose.Schema({
     avatar: {
         type: String
     },
+});
+
+userSchema.pre(/^find/, function (next) {
+    this.select("-__v");
+    next();
 });
 
 const user = mongoose.model("User", userSchema);

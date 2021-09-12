@@ -18,7 +18,7 @@ if (process.argv[2] === "--importCurrency") {
 }
 
 // console.log("testing", utils.currency)
-
+app.use(express.urlencoded())
 app.use(express.json());
 app.use(express.static(`${__dirname}/public`));
 
