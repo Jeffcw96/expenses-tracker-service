@@ -1,7 +1,6 @@
 const UserModel = require('@/models/User')
 const bcrypt = require('bcrypt')
 const jwt = require('jsonwebtoken');
-const { Error } = require('mongoose');
 
 class User {
     constructor(param) {
@@ -50,9 +49,9 @@ class User {
         throw new Error("Invalid Account")
     }
 
-    async updateAccount(id) {
+    async updateAccount(ref_id) {
         try {
-            return await UserModel.findByIdAndUpdate(id, this.param, {
+            return await UserModel.findOneAndUpdate({ ref_id }, this.param, {
                 new: true,
                 runValidators: true,
                 select: "-password"
@@ -65,29 +64,26 @@ class User {
     }
 
     //To do, password didnt update.
-    async updatePassword(id) {
+    async updatePassword(ref_id) {
         try {
             const { new_password } = this.param
             const encryptedNewPassword = await this.passwordEncrytion(new_password)
 
-            const result = await UserModel.findByIdAndUpdate(id, { password: encryptedNewPassword }, {
+            return await UserModel.findOneAndUpdate({ ref_id }, { password: encryptedNewPassword }, {
                 new: true,
                 runValidators: true,
             })
 
-            console.log("user", result)
-            return result
 
         } catch (error) {
+            console.error("error", error)
             throw new Error(error)
         }
 
     }
 
-    async findAccountById() {
-        console.log("this.param", this.param)
-        const { id } = this.param
-        const user = await UserModel.findById(id).select("-password")
+    async findAccountById(ref_id) {
+        const user = await UserModel.findOne({ ref_id }).select("-password")
 
         if (user) {
             return user

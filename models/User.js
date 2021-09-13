@@ -1,6 +1,12 @@
 const mongoose = require("mongoose");
+const uuid = require("@/utils").uuid
 
 const userSchema = new mongoose.Schema({
+    ref_id: {
+        type: String,
+        unique: true,
+        immutable: true
+    },
     name: {
         type: String,
         trim: true
@@ -30,6 +36,14 @@ userSchema.pre(/^find/, function (next) {
     this.select("-__v");
     next();
 });
+
+userSchema.pre('save', function (next) {
+    if (!this.ref_id) {
+        this.ref_id = uuid.uuidv1()
+    }
+    next()
+});
+
 
 const user = mongoose.model("User", userSchema);
 

@@ -47,7 +47,7 @@ exports.verifyUser = async (req, res) => {
 
 
         const payload = {
-            id: user._id,
+            ref_id: user.ref_id,
             email_address: user.email_address
         }
 
@@ -68,9 +68,8 @@ exports.verifyUser = async (req, res) => {
 
 exports.getUser = async (req, res) => {
     try {
-        console.log("req", req.user)
         const userApp = new User(req.user)
-        const user = await userApp.findAccountById()
+        const user = await userApp.findAccountById(req.params.id)
 
         res.json({
             status: "success",
@@ -87,9 +86,10 @@ exports.getUser = async (req, res) => {
 
 exports.updateUser = async (req, res) => {
     try {
+        console.log(req.params)
         delete req.body["password"]
         const userApp = new User(req.body)
-        const user = await userApp.updateAccount(req.user.id)
+        const user = await userApp.updateAccount(req.params.id)
 
         res.json({
             status: "success",
@@ -119,12 +119,12 @@ exports.updatePassword = async (req, res) => {
         const userApp = new User(queryObj)
         const user = await userApp.validAccount()
         await userApp.verifyPassword(user)
-        const userObj = await userApp.updatePassword(req.user.id)
+        const userObj = await userApp.updatePassword(req.params.id)
 
 
         res.json({
             status: "success",
-            message: userObj
+            message: "Password updated"
         })
     } catch (error) {
         res.status(500).json({
