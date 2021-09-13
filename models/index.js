@@ -1,3 +1,3 @@
 module.exports = {
-    Currency: require('./currency')
+    Currency: require('./Currency')
 }
