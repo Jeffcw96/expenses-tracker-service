@@ -5,7 +5,8 @@ const userSchema = new mongoose.Schema({
     ref_id: {
         type: String,
         unique: true,
-        immutable: true
+        immutable: true,
+        required: [true, "Missing Ref Id"]
     },
     name: {
         type: String,
