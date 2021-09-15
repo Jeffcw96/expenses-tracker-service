@@ -1,26 +1,6 @@
 const User = require('@/applications').user
 const { jwtExpiryUnit } = require('@/constants')
 
-exports.validateUser = async (req, res, next) => {
-    try {
-        const authHeader = req.header("Authorization");
-        const splitToken = authHeader.split("Bearer ");
-        const token = splitToken[1];
-
-        const userApp = new User()
-        const decoded = userApp.validateJWT(token)
-        req.user = decoded
-        next()
-
-    } catch (error) {
-        res.status(500).json({
-            status: "failed",
-            message: "Invalid Token"
-        })
-    }
-}
-
-
 exports.createUser = async (req, res) => {
     try {
         const userApp = new User(req.body)
