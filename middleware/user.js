@@ -1,4 +1,12 @@
 const jwt = require("jsonwebtoken")
+const {REF_ID,
+       NAME,
+       EMAIL_ADDRESS,
+       PASSWORD,
+       BIRTHDAY,
+       AVATAR} = require("@/models/user/constant")
+const {body, validationResult} = require('express-validator')
+
 exports.validateUser = async (req, res, next) => {
     try {
         console.log("validate User middlerware")
@@ -18,3 +26,24 @@ exports.validateUser = async (req, res, next) => {
 }
 
 //To do validate input field here
+exports.validateInput = async(req, res, next) => {
+    try {                
+        const errors = validationResult(req)
+
+        if(!errors.isEmpty()){
+            res.status(400).json({
+                status: "failed",
+                message: errors.array()
+            })
+            return
+        }
+    
+        next()
+
+    } catch (error) {
+        res.status(500).json({
+            status: "failed",
+            message: error.message
+        })
+    }
+}

@@ -1,33 +1,40 @@
 const mongoose = require("mongoose");
 const uuid = require("@/utils").uuid
+const {REF_ID,
+       NAME,
+       EMAIL_ADDRESS,
+       PASSWORD,
+       BIRTHDAY,
+       AVATAR} = require("./constant")
 
 const userSchema = new mongoose.Schema({
-    ref_id: {
+    [REF_ID]: {
         type: String,
         unique: true,
         immutable: true,
+        required: [true, "Missing Ref Id"]
     },
-    name: {
+    [NAME]: {
         type: String,
         trim: true
     },
-    email_address: {
+    [EMAIL_ADDRESS]: {
         type: String,
         unique: true,
         required: [true, 'Email Address is required'],
         trim: true,
         immutable: true
     },
-    password: {
+    [PASSWORD]: {
         type: String,
         required: true,
         minLength: [8, 'Minimum length of 8 for password'],
     },
     //see can do validations of check input is date or not in middleware
-    birthday: {
+    [BIRTHDAY]: {
         type: Date
     },
-    avatar: {
+    [AVATAR]: {
         type: String
     },
 });

@@ -1,10 +1,11 @@
 const express = require('express');
 const userController = require('@/controllers').user
 const { userMiddleware } = require('@/middleware')
+const userSchema = require('@/schema/user')
 
 const router = express.Router();
 
-router.post('/register', userController.createUser)
+router.route('/register').post(userSchema,userMiddleware.validateInput ,userController.createUser)
 router.post('/login', userController.verifyUser)
 router
   .route('/:id')
