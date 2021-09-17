@@ -5,7 +5,7 @@ const userSchema = require('@/schema/user')
 
 const router = express.Router();
 
-router.route('/register').post(userSchema,userMiddleware.validateInput ,userController.createUser)
+router.route('/register').post(userMiddleware.validateInput(userSchema.register), userController.createUser)
 router.post('/login', userController.verifyUser)
 router
   .route('/:id')

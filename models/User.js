@@ -14,14 +14,13 @@ const userSchema = new mongoose.Schema({
     email_address: {
         type: String,
         unique: true,
-        required: [true, 'Email Address is required'],
+        required: true,
         trim: true,
         immutable: true
     },
     password: {
         type: String,
         required: true,
-        minLength: [8, 'Minimum length of 8 for password'],
     },
     //see can do validations of check input is date or not in middleware
     birthday: {

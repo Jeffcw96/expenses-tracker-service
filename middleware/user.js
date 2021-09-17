@@ -1,15 +1,8 @@
 const jwt = require("jsonwebtoken")
-const {REF_ID,
-       NAME,
-       EMAIL_ADDRESS,
-       PASSWORD,
-       BIRTHDAY,
-       AVATAR} = require("@/models/user/constant")
-const {body, validationResult} = require('express-validator')
+const { ErrorHandler } = require("@/utils");
 
 exports.validateUser = async (req, res, next) => {
     try {
-        console.log("validate User middlerware")
         const authHeader = req.header("Authorization");
         const splitToken = authHeader.split("Bearer ");
         const token = splitToken[1];
@@ -18,32 +11,22 @@ exports.validateUser = async (req, res, next) => {
         next()
 
     } catch (error) {
-        res.status(500).json({
-            status: "failed",
-            message: "Invalid Token"
-        })
+        const ErrorHandlerApp = new ErrorHandler(res, 500)
+        ErrorHandlerApp.inputError(error.message)
     }
 }
 
 //To do validate input field here
-exports.validateInput = async(req, res, next) => {
-    try {                
-        const errors = validationResult(req)
+exports.validateInput = (schema) => async (req, res, next) => {
+    try {
+        const body = req.body
 
-        if(!errors.isEmpty()){
-            res.status(400).json({
-                status: "failed",
-                message: errors.array()
-            })
-            return
-        }
-    
+        //pass abortEarly to return all errors message
+        await schema.validate(body, { abortEarly: false })
         next()
 
     } catch (error) {
-        res.status(500).json({
-            status: "failed",
-            message: error.message
-        })
+        const ErrorHandlerApp = new ErrorHandler(res, 500)
+        ErrorHandlerApp.inputError(error.message.errors)
     }
 }

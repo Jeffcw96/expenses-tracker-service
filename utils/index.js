@@ -1,8 +1,5 @@
-const importAction = require('@/utils/import')
-const uuid = require('@/utils/uuid')
-
-
 module.exports = {
-    currency: importAction.currency,
-    uuid: uuid
+    currency: require('./import').currency,
+    uuid: require('./uuid'),
+    ErrorHandler: require('./errorHandler')
 }
