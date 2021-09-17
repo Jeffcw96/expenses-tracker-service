@@ -1,3 +1,5 @@
 module.exports = {
-    user: require('./user')
+    user: require('./user'),
+    expenses:require('./expenses'),
+    expensesCategory: require('./expensesCategory')
 }

@@ -1,4 +1,4 @@
 module.exports = {
     userMiddleware: require('./user'),
-    expensesCategoryMiddleware: require('./expensesCategory')
+    inputMiddleware: require('./input'),
 }

@@ -1,4 +1,5 @@
 const User = require('@/applications').user
+const { ErrorHandler } = require("@/utils");
 const { jwtExpiryUnit } = require('@/constants')
 
 exports.createUser = async (req, res) => {
@@ -11,7 +12,6 @@ exports.createUser = async (req, res) => {
             status: "success"
         })
     } catch (error) {
-        console.log("error create User ", error.message)
         res.status(500).json({
             status: "failed",
             message: error.message

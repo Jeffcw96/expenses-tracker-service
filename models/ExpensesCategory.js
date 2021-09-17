@@ -6,7 +6,6 @@ const expensesCategorySchema = new mongoose.Schema({
         type: String,
         unique: true,
         immutable: true,
-        required: [true, "Missing Ref Id"]
     },
     label: {
         type: String,
