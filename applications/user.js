@@ -107,10 +107,6 @@ class User {
         return jwt.sign(paylaod, process.env.TOKEN, { expiresIn: `${time}${unit}` })
     }
 
-    validateJWT(token) {
-        return jwt.verify(token, process.env.TOKEN)
-    }
-
 }
 
 module.exports = User

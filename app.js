@@ -4,6 +4,7 @@ const { fork } = require('child_process')
 const app = express();
 const controllers = require('@/controllers')
 const userRouter = require('@/routes').user
+const expensesCategoryRouter = require('@/routes').expensesCategory
 const DB = require('@/db');
 
 dotenv.config({ path: './config.env' });
@@ -25,6 +26,7 @@ app.use(express.static(`${__dirname}/public`));
 
 //Routes
 app.use('/api/users', userRouter)
+app.use('/api/expenses_category',expensesCategoryRouter)
 
 
 module.exports = app
