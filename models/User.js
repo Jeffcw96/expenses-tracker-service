@@ -29,12 +29,15 @@ const userSchema = new mongoose.Schema({
     avatar: {
         type: String
     },
-});
+},
+    { timestamps: { createdAt: 'created_datetime_utc', updatedAt: 'modified_datetime_utc' } }
+);
 
 userSchema.pre(/^find/, function (next) {
     this.select("-__v");
     next();
 });
+
 
 userSchema.pre('save', function (next) {
     if (!this.ref_id) {

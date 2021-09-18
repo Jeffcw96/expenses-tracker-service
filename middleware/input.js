@@ -6,7 +6,6 @@ exports.validateInput = (schema) => async (req, res, next) => {
         const body = req.body
         //pass abortEarly to return all errors message
         await schema.validate(body, { abortEarly: false })
-        console.log("validating input") 
         next()
 
     } catch (error) {

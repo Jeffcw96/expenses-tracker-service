@@ -66,7 +66,6 @@ exports.getUser = async (req, res) => {
 
 exports.updateUser = async (req, res) => {
     try {
-        console.log(req.params)
         delete req.body["password"]
         const userApp = new User(req.body)
         const user = await userApp.updateAccount(req.params.id)

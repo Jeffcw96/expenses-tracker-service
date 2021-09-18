@@ -20,6 +20,13 @@ const expensesCategorySchema = new mongoose.Schema({
         required: [true, "Missing User Ref Id"],
         immutable: true
     },
+},
+    { timestamps: { createdAt: 'created_datetime_utc', updatedAt: 'modified_datetime_utc' } }
+);
+
+expensesCategorySchema.pre(/^find/, function (next) {
+    this.select("-__v");
+    next();
 });
 
 expensesCategorySchema.pre('save', function (next) {
