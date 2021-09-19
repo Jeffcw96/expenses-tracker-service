@@ -11,7 +11,12 @@ const categorySchema = {
             .required("Label is required"),
         icon: yup
             .string()
-            .required("Icon is required")                    
+            .required("Icon is required"),
+        type: yup
+            .string()
+            .required("Type is required")
+            .matches(/(EXPENSES|INCOME)/)
+
     })
 }
 

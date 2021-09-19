@@ -20,6 +20,14 @@ const expensesCategorySchema = new mongoose.Schema({
         required: [true, "Missing User Ref Id"],
         immutable: true
     },
+    type: {
+        type: String,
+        require: true,
+        enum: {
+            values: ['EXPENSES', 'INCOME'],
+            message: "Category only accept EXPENSES or INCOME"
+        }
+    }
 },
     { timestamps: { createdAt: 'created_datetime_utc', updatedAt: 'modified_datetime_utc' } }
 );

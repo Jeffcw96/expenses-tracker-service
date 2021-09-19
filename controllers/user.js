@@ -1,4 +1,5 @@
 const User = require('@/applications').user
+const ExpensesCategory = require('@/applications').expensesCategory
 const { ErrorHandler } = require("@/utils");
 const { jwtExpiryUnit } = require('@/constants')
 
@@ -6,10 +7,14 @@ exports.createUser = async (req, res) => {
     try {
         const userApp = new User(req.body)
         userApp.comparePassword()
-        await userApp.create()
+        const user = await userApp.create()
+        const fixedCategoryArr = [
+
+        ]
 
         res.json({
-            status: "success"
+            status: "success",
+            message: user
         })
     } catch (error) {
         res.status(500).json({
